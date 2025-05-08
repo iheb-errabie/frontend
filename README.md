@@ -20,7 +20,8 @@ root/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/iheb-errabie/ecommerce-platform.git
+git clone https://github.com/iheb-errabie/backend.git
+git clone https://github.com/iheb-errabie/frontend.git
 cd ecommerce-platform
 ```
 
