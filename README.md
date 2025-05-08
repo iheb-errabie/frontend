@@ -20,7 +20,7 @@ root/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/ecommerce-platform.git
+git clone https://github.com/iheb-errabie/ecommerce-platform.git
 cd ecommerce-platform
 ```
 
