@@ -53,3 +53,10 @@ export default api;
 export const getWishlist = () => api.get("/users/wishlist");
 export const addToWishlist = (productId) => api.post("/users/wishlist/add", { productId });
 export const removeFromWishlist = (productId) => api.post("/users/wishlist/remove", { productId });
+
+
+// admin API
+export const fetchVendors = () => api.get("/admin/vendors");
+export const fetchClients = () => api.get("/admin/clients");
+export const approveVendor = (id) => api.post(`/admin/vendors/${id}/approve`);
+export const deleteUser = (id) => api.delete(`/admin/users/${id}`);

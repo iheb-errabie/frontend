@@ -9,13 +9,15 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AddProduct from './components/vendor/addproduct';
 import ListProducts from './components/vendor/listproduct';
 import UpdateProduct from './components/vendor/updateproduct';
-import Cart from './components/cart/Cart';
 import AddReview from './components/common/AddReview';
 import ManageAdvertisements from './components/advertisement/ManageAdvertisements';
 import { Navigate } from 'react-router-dom';
 import AdvertisementList from './components/advertisement/AdvertisementList';
 import AdvertisementForm from './components/advertisement/AdvertisementForm';
 import Products from "./pages/Products";
+import Cart from './pages/Cart';
+import ManageVendors from "./pages/ManageVendors";
+import ManageClients from "./pages/ManageClients";
 
 function App() {
   return (
@@ -27,8 +29,8 @@ function App() {
         {/* Admin Dashboard */}
         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
           <Route path="/DashboardAdmin" element={<DashboardAdmin />} />
-          <Route path="/manage_clients" element={<div>Manage Clients</div>} />
-          <Route path="/manage_vendors" element={<div>Manage Vendors</div>} />
+          <Route path="/manage_clients" element={<ManageClients />} />
+          <Route path="/manage_vendors" element={<ManageVendors  />} />
         </Route>
 
         {/* Vendor Dashboard */}
