@@ -22,7 +22,8 @@ root/
 ```bash
 git clone https://github.com/iheb-errabie/backend.git
 git clone https://github.com/iheb-errabie/frontend.git
-cd ecommerce-platform
+cd backend
+cd frontend
 ```
 
 ---
