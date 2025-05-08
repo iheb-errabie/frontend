@@ -17,6 +17,7 @@ import AdvertisementForm from './components/advertisement/AdvertisementForm';
 import Products from "./pages/Products";
 import Cart from './pages/Cart';
 import ManageVendors from "./pages/ManageVendors";
+import Wishlist from './pages/Wishlist';
 import ManageClients from "./pages/ManageClients";
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/add_review/:productId" element={<AddReview />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Route>
 
         {/* Redirect any unknown route */}

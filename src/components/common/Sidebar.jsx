@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -10,6 +10,8 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
  * @param {"admin"|"buyer"|"vendor"} props.role
  */
 const Sidebar = ({ role }) => {
+  const navigate = useNavigate();
+
   const menuItems = {
     admin: [
       { name: 'Dashboard', path: '/DashboardAdmin', icon: 'bi-speedometer2' },
@@ -19,6 +21,7 @@ const Sidebar = ({ role }) => {
     ],
     buyer: [
       { name: 'Products', path: '/products', icon: 'bi-box-seam' },
+      { name: 'Wishlist', path: '/wishlist', icon: 'bi-heart' },
       { name: 'Cart', path: '/cart', icon: 'bi-cart' },
       { name: 'Logout', path: '/', icon: 'bi-box-arrow-right' },
     ],
@@ -31,10 +34,21 @@ const Sidebar = ({ role }) => {
     ],
   };
 
+  // Map each role to its dashboard path
+  const dashboardPath = {
+    admin: '/DashboardAdmin',
+    buyer: '/DashboardBuyer',
+    vendor: '/DashboardVendor',
+  };
+
   return (
     <nav className="d-flex flex-column flex-shrink-0 bg-dark text-white vh-100 position-sticky top-0 shadow" style={{width: '240px', minHeight: '100vh'}}>
       <div className="p-3">
-        <span className="fs-4 d-flex align-items-center mb-4 fw-bold">
+        <span
+          className="fs-4 d-flex align-items-center mb-4 fw-bold"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate(dashboardPath[role] || '/')}
+        >
           <i className="bi bi-bag-check-fill me-2 text-primary"></i>
           E-Commerce
         </span>

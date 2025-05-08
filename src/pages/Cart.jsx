@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/common/Sidebar";
-import api from "../api";
+import { getCart, updateCart, removeFromCart, confirmCart } from "../api";
 import { Button, Table, Spinner, Container, Row, Col, Alert, InputGroup, FormControl } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -11,14 +11,11 @@ const Cart = () => {
   const [error, setError] = useState("");
   const [updating, setUpdating] = useState(false);
 
-  // Example: get role from localStorage (adapt as needed)
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const role =  "buyer";
+  const role = "buyer"; // or get from localStorage etc.
 
-  // Fetch cart data
   const fetchCart = () => {
     setLoading(true);
-    api.get("/users/cart")
+    getCart()
       .then(res => setCart(res.data || []))
       .catch(() => setError("Failed to load cart"))
       .finally(() => setLoading(false));
@@ -26,14 +23,14 @@ const Cart = () => {
 
   useEffect(() => {
     fetchCart();
+    // eslint-disable-next-line
   }, []);
 
-  // Handle cart quantity change
   const handleQuantityChange = async (productId, quantity) => {
     if (quantity < 1) return;
     setUpdating(true);
     try {
-      await api.post("/users/cart/update", { productId, quantity });
+      await updateCart(productId, quantity);
       fetchCart();
     } catch {
       setError("Could not update quantity.");
@@ -41,11 +38,10 @@ const Cart = () => {
     setUpdating(false);
   };
 
-  // Remove product from cart
   const handleRemove = async (productId) => {
     setUpdating(true);
     try {
-      await api.post("/users/cart/remove", { productId });
+      await removeFromCart(productId);
       fetchCart();
     } catch {
       setError("Could not remove product.");
@@ -53,11 +49,10 @@ const Cart = () => {
     setUpdating(false);
   };
 
-  // Confirm order/cart
   const handleCheckout = async () => {
     setUpdating(true);
     try {
-      await api.post("/users/cart/confirm");
+      await confirmCart();
       fetchCart();
       alert("Order confirmed! Thank you for your purchase.");
     } catch {
@@ -103,8 +98,8 @@ const Cart = () => {
                     <tr key={product._id}>
                       <td>
                         <div className="d-flex align-items-center gap-2">
-                          {product.image &&
-                            <img src={product.image} alt={product.name} style={{ width: 60, height: 60, objectFit: "cover", borderRadius: 8 }} />}
+                          {product.images && product.images.length > 0 &&
+                            <img src={`http://localhost:3000/${product.images[0]}`} alt={product.name} style={{ width: 60, height: 60, objectFit: "cover", borderRadius: 8 }} />}
                           <span>{product.name}</span>
                         </div>
                       </td>

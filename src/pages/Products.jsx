@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/common/Sidebar";
 import api from "../api";
-import { getWishlist, addToWishlist, removeFromWishlist } from "../api";
+import { getWishlist, addToWishlist, removeFromWishlist, addToCart } from "../api";
 import { Card, Spinner, Form, InputGroup, Button, OverlayTrigger, Tooltip, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -53,18 +53,26 @@ const Products = () => {
   }, [search, category, minPrice, maxPrice, products]);
 
   // Wishlist handlers (sync with backend)
-  const handleAddToWishlist = async (productId) => {
-    await addToWishlist(productId);
-    setWishlist((prev) => prev.includes(productId) ? prev : [...prev, productId]);
+  const handleAddToWishlist = (productId) => {
+    addToWishlist(productId)
+      .then(res => {/* update UI, show success */})
+      .catch(err => {/* handle error */});
   };
-
-  const handleRemoveFromWishlist = async (productId) => {
-    await removeFromWishlist(productId);
-    setWishlist((prev) => prev.filter(id => id !== productId));
+  const handleRemoveFromWishlist = (productId) => {
+    removeFromWishlist(productId)
+      .then(res => {/* update UI, show success */})
+      .catch(err => {/* handle error */});
   };
-
   // Example: get role from localStorage (adapt as needed)
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const handleAddToCart = (productId) => {
+    addToCart(productId)
+      .then(() => {
+        // Optionally: show a toast, notification, or temporarily disable the button
+      })
+      .catch(() => {
+        // Optionally: show error message
+      });
+  };
   const role =  "buyer";
 
   return (
@@ -157,9 +165,12 @@ const Products = () => {
                       <div className="fw-semibold text-primary mb-2">{product.price} TND</div>
                       <div className="small text-muted mb-2">{product.category}</div>
                       <div className="d-flex gap-2 mt-auto">
-                        <button className="btn btn-primary flex-grow-1">
-                          <i className="bi bi-cart-plus"></i> Add to Cart
-                        </button>
+                      <button
+  className="btn btn-primary flex-grow-1"
+  onClick={() => handleAddToCart(product._id)}
+>
+  <i className="bi bi-cart-plus"></i> Add to Cart
+</button>
                         <OverlayTrigger
                           placement="top"
                           overlay={

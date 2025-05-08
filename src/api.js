@@ -36,9 +36,6 @@ export const approveAdvertisement = async (id) => api.put(`/advertisements/${id}
 export const fetchProductsByVendor = async (vendorId) => api.get(`/products/vendor/${vendorId}`);
 
 // Cart API
-export const fetchCart = async () => api.get('/users/cart');
-export const addToCart = async (data) => api.post('/users/cart', data);
-export const removeFromCart = async (productId) => api.delete(`/users/cart/${productId}`);
 
 export const confirmOrder = async () => api.post('/users/cart/confirm-order');
 
@@ -54,9 +51,28 @@ export const getWishlist = () => api.get("/users/wishlist");
 export const addToWishlist = (productId) => api.post("/users/wishlist/add", { productId });
 export const removeFromWishlist = (productId) => api.post("/users/wishlist/remove", { productId });
 
-
 // admin API
 export const fetchVendors = () => api.get("/admin/vendors");
 export const fetchClients = () => api.get("/admin/clients");
 export const approveVendor = (id) => api.post(`/admin/vendors/${id}/approve`);
 export const deleteUser = (id) => api.delete(`/admin/users/${id}`);
+
+export const getCart = () => api.get("/cart");
+export const updateCart = (productId, quantity) =>
+  api.post("/cart/update", { productId, quantity });
+export const removeFromCart = (productId) =>
+  api.post("/cart/remove", { productId });
+export const confirmCart = () => api.post("/cart/confirm");
+export const addToCart = (productId, quantity = 1) =>
+  api.post("/cart/add", { productId, quantity });
+
+/* --------- Orders (buyer) --------- */
+export const getOrders = () => api.get("/users/orders");
+
+/* --------- Admin APIs --------- */
+export const getUserStats = () => api.get("/admin/user-stats");
+export const getProductStats = () => api.get("/admin/product-stats");
+export const getOrderStats = () => api.get("/admin/order-stats");
+export const getRecentUsers = () => api.get("/admin/recent-users");
+
+export const getProducts = () => api.get("/products");
