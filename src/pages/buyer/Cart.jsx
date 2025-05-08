@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/common/Sidebar";
-import { getCart, updateCart, removeFromCart, confirmCart } from "../api";
+import Sidebar from "../../components/common/Sidebar";
+import { getCart, updateCart, removeFromCart, confirmCart } from "../../api";
 import { Button, Table, Spinner, Container, Row, Col, Alert, InputGroup, FormControl } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";

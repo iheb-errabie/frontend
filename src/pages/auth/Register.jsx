@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../api'; // Make sure this path is correct
+import api from '../../api'; // Make sure this path is correct
 
 const Register = () => {
   const [username, setuserName] = useState('');

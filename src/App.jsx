@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/Login';
-import Register from './components/Register';
-import DashboardAdmin from './components/DashboardAdmin';
-import DashboardVendor from './components/DashboardVendor';
-import DashboardBuyer from './components/DashboardBuyer';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import DashboardAdmin from './pages/admin/DashboardAdmin';
+import DashboardVendor from './pages/vendor/DashboardVendor';
+import DashboardBuyer from './pages/buyer/DashboardBuyer';
 import ProtectedRoute from './components/ProtectedRoute';
 import AddProduct from './components/vendor/addproduct';
 import ListProducts from './components/vendor/listproduct';
@@ -14,11 +14,11 @@ import ManageAdvertisements from './components/advertisement/ManageAdvertisement
 import { Navigate } from 'react-router-dom';
 import AdvertisementList from './components/advertisement/AdvertisementList';
 import AdvertisementForm from './components/advertisement/AdvertisementForm';
-import Products from "./pages/Products";
-import Cart from './pages/Cart';
-import ManageVendors from "./pages/ManageVendors";
-import Wishlist from './pages/Wishlist';
-import ManageClients from "./pages/ManageClients";
+import Products from "./pages/buyer/Products";
+import Cart from './pages/buyer/Cart';
+import ManageVendors from "./pages/admin/ManageVendors";
+import Wishlist from './pages/buyer/Wishlist';
+import ManageClients from "./pages/admin/ManageClients";
 
 function App() {
   return (

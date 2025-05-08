@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from './common/Sidebar';
-import api from "../api";
+import Sidebar from '../../components/common/Sidebar';
+import api from "../../api";
 import { Container, Row, Col, Card, Spinner, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";

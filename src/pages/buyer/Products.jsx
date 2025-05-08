@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/common/Sidebar";
-import api from "../api";
-import { getWishlist, addToWishlist, removeFromWishlist, addToCart } from "../api";
+import Sidebar from "../../components/common/Sidebar";
+import api from "../../api";
+import { getWishlist, addToWishlist, removeFromWishlist, addToCart } from "../../api";
 import { Card, Spinner, Form, InputGroup, Button, OverlayTrigger, Tooltip, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";

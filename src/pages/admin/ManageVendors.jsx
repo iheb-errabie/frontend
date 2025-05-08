@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/common/Sidebar";
-import { fetchVendors, approveVendor, deleteUser } from "../api";
+import Sidebar from "../../components/common/Sidebar";
+import { fetchVendors, approveVendor, deleteUser } from "../../api";
 import { Table, Button, Spinner, Alert, Container } from "react-bootstrap";
 
 const ManageVendors = () => {

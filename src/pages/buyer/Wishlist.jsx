@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/common/Sidebar";
-import { getWishlist, removeFromWishlist } from "../api"; // Adjust path if needed
+import Sidebar from "../../components/common/Sidebar";
+import { getWishlist, removeFromWishlist } from "../../api"; // Adjust path if needed
 import { Container } from "react-bootstrap";
 
 function Wishlist() {

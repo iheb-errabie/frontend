@@ -4,9 +4,9 @@ import { useNavigate, Link, Outlet } from 'react-router-dom';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Button, Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
-import api, { fetchAdvertisements } from '../api';
+import api, { fetchAdvertisements } from '../../api';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import Sidebar from './common/Sidebar';
+import Sidebar from '../../components/common/Sidebar';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
