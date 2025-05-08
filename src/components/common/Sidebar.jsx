@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
-import './Sidebar.css';
+
 
 const Sidebar = ({ role }) => {
   const menuItems = {
@@ -26,7 +26,7 @@ const Sidebar = ({ role }) => {
   };
 
   return (
-    <div className="sidebar bg-dark text-white">
+    <div className="sidebar bg-dark text-white h-100">
       <ul className="nav flex-column">
         {menuItems[role]?.map((item, index) => (
           <li className="nav-item" key={index}>

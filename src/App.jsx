@@ -15,6 +15,7 @@ import ManageAdvertisements from './components/advertisement/ManageAdvertisement
 import { Navigate } from 'react-router-dom';
 import AdvertisementList from './components/advertisement/AdvertisementList';
 import AdvertisementForm from './components/advertisement/AdvertisementForm';
+import Products from "./pages/Products";
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
         {/* Buyer Dashboard */}
         <Route element={<ProtectedRoute allowedRoles={['client']} />}>
           <Route path="/DashboardBuyer" element={<DashboardBuyer />} />
-          <Route path="/products" element={<div>Product List</div>} />
+          <Route path="/products" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/add_review/:productId" element={<AddReview />} />
         </Route>

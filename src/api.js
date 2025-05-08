@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const api = axios.create({
   baseURL: 'http://localhost:3000/api', // Update with your backend URL
   headers: {
@@ -48,3 +49,7 @@ export const addReview = async (productId, data) => api.post(`/products/${produc
 export const updateReview = async (productId, reviewId, data) => api.put(`/products/${productId}/reviews/${reviewId}`, data); 
 
 export default api;
+// wish list API
+export const getWishlist = () => api.get("/users/wishlist");
+export const addToWishlist = (productId) => api.post("/users/wishlist/add", { productId });
+export const removeFromWishlist = (productId) => api.post("/users/wishlist/remove", { productId });
