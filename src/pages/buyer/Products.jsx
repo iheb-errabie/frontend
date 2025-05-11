@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Sidebar from "../../components/common/Sidebar";
-import api from "../../api";
-import { getWishlist, addToWishlist, removeFromWishlist, addToCart } from "../../api";
-import { Card, Spinner, Form, InputGroup, Button, OverlayTrigger, Tooltip, Container, Row, Col } from "react-bootstrap";
+import api, { getWishlist, addToWishlist, removeFromWishlist, addToCart } from "../../api";
+import {
+  Card, Spinner, Form, InputGroup, Button, OverlayTrigger, Tooltip,
+  Container, Row, Col, Modal, Carousel
+} from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -16,6 +18,9 @@ const Products = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [wishlist, setWishlist] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMedia, setModalMedia] = useState([]);
+  const videoRefs = useRef([]);
 
   // Fetch products and wishlist
   useEffect(() => {
@@ -52,28 +57,37 @@ const Products = () => {
     setDisplayed(filtered);
   }, [search, category, minPrice, maxPrice, products]);
 
-  // Wishlist handlers (sync with backend)
   const handleAddToWishlist = (productId) => {
-    addToWishlist(productId)
-      .then(res => {/* update UI, show success */})
-      .catch(err => {/* handle error */});
+    addToWishlist(productId).catch(() => {});
   };
   const handleRemoveFromWishlist = (productId) => {
-    removeFromWishlist(productId)
-      .then(res => {/* update UI, show success */})
-      .catch(err => {/* handle error */});
+    removeFromWishlist(productId).catch(() => {});
   };
-  // Example: get role from localStorage (adapt as needed)
   const handleAddToCart = (productId) => {
-    addToCart(productId)
-      .then(() => {
-        // Optionally: show a toast, notification, or temporarily disable the button
-      })
-      .catch(() => {
-        // Optionally: show error message
-      });
+    addToCart(productId).catch(() => {});
   };
-  const role =  "buyer";
+  const role = "buyer";
+
+  // Modal logic
+  const handleCardClick = (product) => {
+    const media = [
+      ...(product.images || []).map(img => ({ type: "image", src: img })),
+      ...(product.video ? [{ type: "video", src: product.video }] : [])
+    ];
+    setModalMedia(media);
+    setShowModal(true);
+  };
+
+  const handleSlideChange = (eventKey) => {
+    videoRefs.current.forEach(video => {
+      if (video) video.pause();
+    });
+    const currentMedia = modalMedia[eventKey];
+    if (currentMedia && currentMedia.type === "video") {
+      const videoElement = videoRefs.current[eventKey];
+      if (videoElement) videoElement.play();
+    }
+  };
 
   return (
     <div className="d-flex" style={{ minHeight: "100vh", background: "#f3f4f6" }}>
@@ -83,7 +97,6 @@ const Products = () => {
           <h1 className="mb-4 text-3xl fw-bold text-gray-800 d-flex align-items-center gap-2">
             <i className="bi bi-box-seam-fill text-primary"></i> All Products
           </h1>
-
           {/* FILTER BAR */}
           <Row className="g-3 mb-4">
             <Col xs={12} md={4} lg={3}>
@@ -140,7 +153,6 @@ const Products = () => {
               )}
             </Col>
           </Row>
-
           {/* PRODUCTS GRID */}
           {loading ? (
             <div className="d-flex align-items-center justify-content-center" style={{ height: "300px" }}>
@@ -155,22 +167,21 @@ const Products = () => {
             <Row xs={1} sm={2} md={3} xl={4} className="g-4">
               {displayed.map((product) => (
                 <Col key={product._id}>
-                  <Card className="h-100 shadow-sm">
-                    {product.image && (
-                      <Card.Img variant="top" src={product.image} alt={product.name} style={{ maxHeight: 220, objectFit: "cover" }} />
-                    )}
+                  <Card className="h-100 shadow-sm" style={{ cursor: "pointer" }} onClick={() => handleCardClick(product)}>
+                    <Card.Img variant="top" src={product.images && product.images[0]} 
+                      alt={product.name} style={{ maxHeight: 220, objectFit: "cover" }} />
                     <Card.Body className="d-flex flex-column">
                       <Card.Title className="text-truncate">{product.name}</Card.Title>
                       <Card.Text className="text-secondary">{product.description?.slice(0, 80)}...</Card.Text>
                       <div className="fw-semibold text-primary mb-2">{product.price} TND</div>
                       <div className="small text-muted mb-2">{product.category}</div>
                       <div className="d-flex gap-2 mt-auto">
-                      <button
-  className="btn btn-primary flex-grow-1"
-  onClick={() => handleAddToCart(product._id)}
->
-  <i className="bi bi-cart-plus"></i> Add to Cart
-</button>
+                        <button
+                          className="btn btn-primary flex-grow-1"
+                          onClick={e => { e.stopPropagation(); handleAddToCart(product._id); }}
+                        >
+                          <i className="bi bi-cart-plus"></i> Add to Cart
+                        </button>
                         <OverlayTrigger
                           placement="top"
                           overlay={
@@ -181,12 +192,13 @@ const Products = () => {
                         >
                           <button
                             className={`btn btn-outline-danger${wishlist.includes(product._id) ? " active" : ""}`}
-                            onClick={() =>
+                            style={{ minWidth: "44px" }}
+                            onClick={e => {
+                              e.stopPropagation();
                               wishlist.includes(product._id)
                                 ? handleRemoveFromWishlist(product._id)
-                                : handleAddToWishlist(product._id)
-                            }
-                            style={{ minWidth: "44px" }}
+                                : handleAddToWishlist(product._id);
+                            }}
                           >
                             <i className={wishlist.includes(product._id) ? "bi bi-heart-fill" : "bi bi-heart"}></i>
                           </button>
@@ -198,6 +210,31 @@ const Products = () => {
               ))}
             </Row>
           )}
+          {/* MODAL for images and video */}
+          <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+            <Modal.Body>
+              <Carousel interval={null} onSlide={handleSlideChange}>
+                {modalMedia.map((media, idx) => (
+                  <Carousel.Item key={idx}>
+                    {media.type === "image" ? (
+                      <img src={media.src} alt={`media-${idx}`} className="d-block w-100" />
+                    ) : (
+                      <video
+                        controls
+                        className="d-block w-100"
+                        ref={el => videoRefs.current[idx] = el}
+                        onClick={e => e.stopPropagation()}
+                        style={{ maxHeight: 400 }}
+                      >
+                        <source src={media.src} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    )}
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            </Modal.Body>
+          </Modal>
         </Container>
       </div>
     </div>

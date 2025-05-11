@@ -57,7 +57,7 @@ function Wishlist() {
                     <div className="card h-100">
                       {product.images && product.images.length > 0 && (
                         <img
-                          src={`http://localhost:3000/${product.images[0]}`}
+                          src={product.images[0]}
                           className="card-img-top"
                           alt={product.name}
                           style={{ objectFit: "cover", height: "200px" }}

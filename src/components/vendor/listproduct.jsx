@@ -65,11 +65,11 @@ const ListProducts = () => {
     const media = [
       ...images.map(image => ({
         type: 'image',
-        src: `http://localhost:3000/${image.replace(/\\/g, '/')}`
+        src: image
       })),
       ...(video ? [{
         type: 'video',
-        src: `http://localhost:3000/${video.replace(/\\/g, '/')}`
+        src: video
       }] : [])
     ];
     setModalMedia(media);
@@ -116,7 +116,7 @@ const ListProducts = () => {
                 <td style={{ position: 'relative' }}>
                   {product.images && product.images.length > 0 && (
                     <img
-                      src={`http://localhost:3000/${product.images[0].replace(/\\/g, '/')}`}
+                      src={`${product.images[0]}`}
                       alt="Product"
                       thumbnail="true"
                       width={100}
