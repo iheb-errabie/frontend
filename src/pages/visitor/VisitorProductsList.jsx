@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../../styles/modernDashboard.css";
 import { Link } from "react-router-dom";
+import VisitorNavbar from "../../components/common/VisitorNavbar";
 
 const getCookie = (name) => {
   const value = `; ${document.cookie}`;
@@ -18,7 +19,7 @@ const getCookie = (name) => {
   if (parts.length === 2) return parts.pop().split(';').shift();
 };
 
-const Products = () => {
+const VisitorProductsList = () => {
   const token = localStorage.getItem("token") || getCookie("token");
   const isLoggedIn = !!token;
 
@@ -144,7 +145,7 @@ const Products = () => {
 
   return (
     <div className="modern-dashboard-bg min-vh-100">
-      <BuyerNavbar />
+      <VisitorNavbar />
       <div className="flex-grow-1 p-3 p-md-4">
         <Container fluid>
           <h2 className="fw-bold d-flex align-items-center gap-2 mb-4">
@@ -233,17 +234,12 @@ const Products = () => {
                     <Card.Body className="d-flex flex-column">
                       <div className="d-flex align-items-center gap-2 mb-2">
                         <Card.Title className="modern-product-title text-truncate mb-0">
-                          <Link 
-                            to={`/products/${product._id}`} 
-                            className="text-dark text-decoration-none hover-primary"
-                            onClick={(e) => e.stopPropagation()}
-                            aria-label={`View details of ${product.name}`}
-                          >
+                          
                             <span className="text-truncate d-inline-block align-middle">
                               {product.name}
                             </span>
                             <i className="bi bi-box-arrow-up-right ms-2 align-middle" style={{ fontSize: '0.8rem' }}></i>
-                          </Link>
+                          
                         </Card.Title>
                         {product.category && (
                           <Badge bg="light" text="dark" className="modern-cat-badge">{product.category}</Badge>
@@ -341,4 +337,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default VisitorProductsList;

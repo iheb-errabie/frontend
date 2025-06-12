@@ -73,7 +73,7 @@ const AdvertisementList = () => {
               </div>
               <div>
                 <button
-                  onClick={() => navigate(`/advertisements/edit/${ad._id}`)}
+                  onClick={() => navigate(`/update_ads/${ad._id}`)}
                   className="btn btn-warning btn-sm me-2"
                 >
                   Edit

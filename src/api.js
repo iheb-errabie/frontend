@@ -76,3 +76,16 @@ export const getOrderStats = () => api.get("/admin/order-stats");
 export const getRecentUsers = () => api.get("/admin/recent-users");
 
 export const getProducts = () => api.get("/products");
+export const getProductById = (id) => api.get(`/products/${id}`);
+
+
+export const fetchVendorStats = () => api.get('/users/stats/vendor');
+
+// Profile APIs
+export const getProfile = () => api.get("/users/me");
+export const updateProfile = (data) => api.put("/users/me", data);
+
+export const getUserById = (id) => api.get(`/users/${id}`);
+
+export const forgotPassword = (email) => api.post('/users/forgot-password', { email });
+export const resetPassword = (email, newPassword) => api.post('/users/reset-password', {email,  newPassword });

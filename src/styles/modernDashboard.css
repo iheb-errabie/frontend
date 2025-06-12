@@ -1,0 +1,232 @@
+.modern-dashboard-bg {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #f3f4f6 60%, #e0e7ff 100%);
+}
+
+.modern-profile-card {
+  background: #fff;
+  border-radius: 1rem;
+  min-height: 84px;
+}
+
+.modern-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3b82f6;
+  background: #f1f5f9;
+}
+
+.modern-tip-card {
+  background: linear-gradient(90deg, #fdf6b2 60%, #f9fafb 100%);
+  border-radius: 1rem;
+  min-width: 220px;
+}
+
+.modern-tip-text {
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: #b45309;
+}
+
+.modern-stat-row {
+  gap: 1.2rem 0;
+}
+
+.modern-stat-card {
+  position: relative;
+  border-radius: 1.2rem;
+  padding: 0.8rem 0.5rem 0.7rem 0.5rem;
+  color: #fff;
+  overflow: hidden;
+  transition: transform 0.13s;
+}
+.modern-stat-card:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.13);
+}
+
+.modern-stat-icon-bg {
+  background: rgba(255,255,255,0.18);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 1px 8px rgba(59,130,246,0.07);
+}
+.modern-stat-icon {
+  font-size: 2rem;
+}
+
+.modern-stat-content {
+  margin-left: 0.4rem;
+}
+.modern-stat-value {
+  font-size: 2.1rem;
+  font-weight: 700;
+}
+.modern-stat-label {
+  font-size: 1.02rem;
+  color: #e0e7ef;
+  opacity: 0.92;
+  font-weight: 500;
+}
+
+.gradient-green {
+  background: linear-gradient(120deg, #22c55e 80%, #bbf7d0 100%);
+}
+.gradient-pink {
+  background: linear-gradient(120deg, #ec4899 80%, #fbcfe8 100%);
+}
+.gradient-blue {
+  background: linear-gradient(120deg, #3b82f6 80%, #dbeafe 100%);
+}
+.clickable {
+  cursor: pointer;
+}
+
+.modern-table-responsive {
+  border-radius: 1.1rem;
+  overflow: hidden;
+}
+.modern-table {
+  border-radius: 1.1rem;
+  overflow: hidden;
+  font-size: 1.04rem;
+}
+.modern-table th, .modern-table td {
+  vertical-align: middle;
+  border: none;
+}
+.modern-table thead tr {
+  background: #f3f4f6;
+}
+.modern-status-chip {
+  display: inline-block;
+  padding: 0.31em 0.84em;
+  border-radius: 1em;
+  font-size: 0.97em;
+  font-weight: 600;
+  color: #fff;
+}
+.status-success {
+  background: #22c55e;
+}
+.status-secondary {
+  background: #64748b;
+}
+.modern-order-view-btn {
+  border-radius: 1.2em;
+  font-size: 0.98em;
+  font-weight: 500;
+  padding: 0.3em 0.95em;
+}
+
+@media (max-width: 767px) {
+  .modern-stat-card,
+  .modern-profile-card,
+  .modern-tip-card {
+    border-radius: 0.7rem;
+    padding: 0.75rem;
+  }
+  .modern-table {
+    font-size: 0.97rem;
+  }
+}
+
+
+/* Preview Cards */
+.preview-card {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.preview-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 1;
+}
+
+.preview-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.preview-products .col:hover .preview-overlay {
+  opacity: 1;
+}
+
+.preview-products .col:hover .preview-card {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.scrollable-products::-webkit-scrollbar {
+  display: none;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.scrollable-products {
+  scroll-behavior: smooth;
+}
+
+.preview-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.preview-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.preview-products-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.preview-products-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.preview-products-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.product-card:hover {
+    transform: rotate(0deg) translateY(-20px) scale(1.05) !important;
+    z-index: 100 !important;
+    opacity: 1 !important;
+    cursor: pointer;
+}
+
+.product-card:hover ~ .product-card {
+    opacity: 0.4 !important;
+    transform: translateX(40px) scale(0.95) !important;
+}
+
+.product-card:hover .card-img {
+    transform: scale(1.03) !important;
+}
+
+.hover-primary:hover {
+  color: var(--bs-primary) !important;
+  text-decoration: underline;
+}

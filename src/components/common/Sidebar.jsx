@@ -12,12 +12,23 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const Sidebar = ({ role }) => {
   const navigate = useNavigate();
 
+
+    const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    navigate("/");
+    window.location.reload();
+  };
+
+
   const menuItems = {
     admin: [
       { name: 'Dashboard', path: '/DashboardAdmin', icon: 'bi-speedometer2' },
       { name: 'Manage Clients', path: '/manage_clients', icon: 'bi-people' },
       { name: 'Manage Vendors', path: '/manage_vendors', icon: 'bi-shop' },
-      { name: 'Logout', path: '/', icon: 'bi-box-arrow-right' },
+      { name : 'Manage Advertisements', path: '/manage_advertisements', icon: 'bi-megaphone' },
+  
     ],
     buyer: [
       { name: 'Products', path: '/products', icon: 'bi-box-seam' },
@@ -30,7 +41,7 @@ const Sidebar = ({ role }) => {
       { name: 'Add Product', path: '/addproduct', icon: 'bi-plus-circle' },
       { name: 'List Products', path: '/listproduct', icon: 'bi-list' },
       { name: 'Manage Ads', path: '/manage_ads', icon: 'bi-megaphone' },
-      { name: 'Logout', path: '/', icon: 'bi-box-arrow-right' },
+      { name: 'Edit Profile', path: '/edit_profile_vendor', icon: 'bi-person' }
     ],
   };
 
@@ -39,6 +50,7 @@ const Sidebar = ({ role }) => {
     admin: '/DashboardAdmin',
     buyer: '/DashboardBuyer',
     vendor: '/DashboardVendor',
+    default: '/',
   };
 
   return (
@@ -69,8 +81,26 @@ const Sidebar = ({ role }) => {
                 <i className={`bi ${item.icon} me-3 fs-5`}></i>
                 <span className="sidebar-label">{item.name}</span>
               </NavLink>
+
+            
             </li>
           ))}
+
+          <NavLink
+                onClick={handleLogout}
+                className={({ isActive }) =>
+                  `nav-link text-white d-flex align-items-center rounded mb-1 px-3 py-2${isActive ? ' active bg-primary' : ' bg-dark'}`
+                }
+                style={({ isActive }) =>
+                  isActive
+                    ? { fontWeight: 'bold', background: '#0d6efd', color: 'white' }
+                    : { color: '#adb5bd' }
+                }
+              >
+                <i className={`bi bi-box-arrow-right me-3 fs-5`}></i>
+                <span className="sidebar-label">Logout</span>
+              </NavLink>
+
         </ul>
       </div>
       <div className="mt-auto p-3 small text-secondary text-center">

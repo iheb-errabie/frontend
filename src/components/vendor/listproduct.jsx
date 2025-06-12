@@ -23,10 +23,20 @@ const ListProducts = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    api.get('/products')
-      .then(res => setProducts(res.data))
-      .catch(err => setError('Failed to fetch products'))
-      .finally(() => setLoading(false));
+    const fetchProducts = async () => {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const vendorId = user?.userId;
+        const response = await api.get(`/products/vendor/${vendorId}`);
+        setProducts(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch products');
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   const handleDelete = async (id) => {
@@ -173,7 +183,8 @@ const ListProducts = () => {
                     </span>
                   )}
                 </td>
-                <td>{product.name}</td>
+                <td className="clickable text-primary font-weight-bold"
+                 onClick={() => navigate(`/productvendor/${product._id}`)} >{product.name}</td>
                 <td>{product.description}</td>
                 <td>${product.price}</td>
                 <td>{product.category}</td>

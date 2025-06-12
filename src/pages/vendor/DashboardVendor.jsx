@@ -1,10 +1,9 @@
-// src/components/DashboardVendor.jsx
-import React, { useEffect, useState } from 'react';
-import { useNavigate, Link, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Bar, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { Button, Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap';
-import api, { fetchAdvertisements } from '../../api';
+import { fetchAdvertisements } from '../../api';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Sidebar from '../../components/common/Sidebar';
 
@@ -12,42 +11,32 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 
 const DashboardVendor = () => {
   const navigate = useNavigate();
-  const [stats, setStats] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [ads, setAds] = useState([]);
 
   useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await api.get('/vendor/stats/buyers-per-category');
-        setStats(response.data);
-      } catch (error) {
-        setError('Error fetching stats');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || user.role !== 'vendor') {
       navigate('/login');
-    } else {
-      fetchStats();
     }
 
     const loadAdvertisements = async () => {
       try {
+        setLoading(true);
         const response = await fetchAdvertisements();
         setAds(response.data);
       } catch (error) {
-        console.error('Failed to fetch advertisements:', error);
+        setError('Failed to fetch advertisements');
+      } finally {
+        setLoading(false);
       }
     };
     loadAdvertisements();
   }, [navigate]);
 
-  const categoryStats = stats.length > 0 ? stats : [
+  // Static example data
+  const categoryStats = [
     { category: 'Electronics', buyers: 45, products: 12 },
     { category: 'Clothing', buyers: 32, products: 18 },
     { category: 'Books', buyers: 27, products: 9 },
@@ -83,12 +72,6 @@ const DashboardVendor = () => {
   const handleViewProducts = () => {
     navigate('/listproduct');
   };
-
-  const menuItems = [
-    { name: 'Dashboard', path: '/DashboardVendor', icon: 'bi-house' },
-    { name: 'List Products', path: '/listproduct', icon: 'bi-list' },
-    { name: 'Add Product', path: '/addproduct', icon: 'bi-plus-circle' },
-  ];
 
   return (
     <div className="d-flex">

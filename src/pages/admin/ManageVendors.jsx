@@ -15,10 +15,19 @@ const ManageVendors = () => {
       .finally(() => setLoading(false));
   }, []);
 
+ // handle approve vendor
   const handleApprove = async (id) => {
-    await approveVendor(id);
-    setVendors(vendors.map(v => v._id === id ? { ...v, approved: true } : v));
-  };
+    try {
+      const res = await approveVendor(id);
+      if (res.status === 200) {
+        setVendors(vendors.map(v => v._id === id ? { ...v, approved: true } : v));
+      } else {
+        setError("Failed to approve vendor");
+      }
+    } catch (err) {
+      setError("Failed to approve vendor");
+    }
+  }
 
   const handleDelete = async (id) => {
     await deleteUser(id);
@@ -46,9 +55,9 @@ const ManageVendors = () => {
                   <tr key={v._id}>
                     <td>{v.username}</td>
                     <td>{v.email}</td>
-                    <td>{v.approved ? "Approved" : "Pending"}</td>
+                    <td>{v.approved == true ? "Approved" : "Pending"}</td>
                     <td>
-                      {!v.approved && (
+                      {v.approved == false && (
                         <Button size="sm" variant="success" onClick={() => handleApprove(v._id)}>Approve</Button>
                       )}
                       <Button size="sm" variant="danger" className="ms-2" onClick={() => handleDelete(v._id)}>Delete</Button>
